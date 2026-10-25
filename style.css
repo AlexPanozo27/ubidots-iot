@@ -1,0 +1,183 @@
+:root{
+  --cream:#fffbea;--ink:#1c1b3a;--muted:#5b5a78;--blue:#2326e6;--violet:#a63bd0;
+  --sky:#bfe3ff;--lav:#d8caff;--navy:#0c2d57;--teal:#0f6f86;--aqua:#27c3b0;--coral:#ff7a45;
+  --line:#ece6c8;--ok:#13a36b;--bad:#d9363e;--warn:#e69a00;
+  --grad:linear-gradient(135deg,#4a63ff 0%,#b265d6 100%);
+  --gradtxt:linear-gradient(90deg,#1c1cf0 0%,#a63bd0 100%);
+  --shadow:0 10px 30px rgba(60,40,140,.10);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;font-family:"Lexend",system-ui,sans-serif;color:var(--ink);line-height:1.6;
+  background:linear-gradient(180deg,var(--sky) 0%,var(--lav) 100%) fixed;padding:0 14px 30px}
+h1,h2,h3{font-family:"League Spartan","Lexend",sans-serif;line-height:1.05;margin:0 0 .4em;letter-spacing:-.01em}
+h1{font-size:clamp(2.6rem,7vw,5rem);font-weight:800}
+h2{font-size:clamp(2rem,4.4vw,3.1rem);font-weight:800}
+h3{font-size:1.35rem;font-weight:700}
+p{margin:0 0 1em}
+a{color:var(--blue)}
+code,pre,.mono{font-family:ui-monospace,"Cascadia Code",Consolas,monospace}
+code{background:#f1ecff;border-radius:6px;padding:.05em .38em;font-size:.88em}
+.grad{background:var(--gradtxt);-webkit-background-clip:text;background-clip:text;color:transparent}
+.skip{position:absolute;left:-999px;top:8px;background:#fff;padding:8px 14px;border-radius:10px;z-index:99}
+.skip:focus{left:10px}
+
+/* barra */
+.topbar{position:sticky;top:10px;z-index:50;max-width:1180px;margin:10px auto 14px;display:flex;align-items:center;gap:14px;
+  background:rgba(255,251,234,.88);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:999px;padding:8px 10px 8px 14px;box-shadow:var(--shadow)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-family:"League Spartan",sans-serif;font-weight:800;font-size:1.3rem;white-space:nowrap}
+.brand img{width:36px;height:36px;object-fit:contain}
+.topbar nav{display:flex;gap:2px;overflow-x:auto;margin-left:auto;scrollbar-width:none}
+.topbar nav::-webkit-scrollbar{display:none}
+.topbar nav a{padding:8px 14px;border-radius:999px;text-decoration:none;color:var(--muted);font-size:.92rem;white-space:nowrap}
+.topbar nav a:hover,.topbar nav a.on{background:#fff;color:var(--blue)}
+
+/* hojas */
+.sheet{max-width:1180px;margin:0 auto 18px;background:var(--cream);border-radius:28px 28px 28px 28px;padding:clamp(22px,4vw,54px);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.sheet.hero{border-top-left-radius:64px;padding-bottom:0}
+.kicker{display:inline-block;font-size:.8rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--violet);margin-bottom:10px}
+.lead{font-size:1.15rem;color:var(--muted);max-width:60ch}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center}
+.hero h1{margin-bottom:.3em}
+.cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:24px 0}
+.btn{font:inherit;font-family:"League Spartan",sans-serif;font-weight:700;font-size:1.2rem;border:0;border-radius:18px;padding:14px 30px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.primary{background:var(--grad);color:#fff;box-shadow:0 8px 20px rgba(120,80,220,.35)}
+.btn.ghost{background:transparent;color:var(--blue);padding-left:6px}
+.btn.ghost .play{width:30px;height:30px;border:3px solid var(--violet);border-radius:50%;display:inline-grid;place-items:center;font-size:.7rem;color:var(--violet)}
+.btn.small{font-size:1rem;padding:9px 18px;border-radius:14px}
+.btn.line{background:#fff;color:var(--blue);border:2px solid #d9d2ff}
+.btn:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid #7d6bff;outline-offset:2px}
+.hero-art{width:100%;height:auto}
+.team{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:24px;padding:20px 24px;margin:8px 0 28px}
+.team img{width:96px;height:auto}
+.team .uni{font-weight:700;letter-spacing:.04em;font-size:.95rem}
+.team .fac{color:var(--muted);font-size:.85rem}
+.team .foro{margin:8px 0;font-size:.92rem}
+.team ul{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 8px}
+.team li{background:#f3efff;border-radius:999px;padding:3px 12px;font-size:.78rem;font-weight:500}
+.waves{display:block;width:calc(100% + 2*clamp(22px,4vw,54px));margin:0 calc(-1*clamp(22px,4vw,54px));height:auto}
+
+/* tarjetas */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:22px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 4px 14px rgba(60,40,140,.05)}
+.card .tag{display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--grad);border-radius:999px;padding:3px 12px;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem;margin-bottom:0}
+.dotcolor{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+
+/* laboratorio */
+.lab{background:#fff;border:2px dashed #cfc3ff;border-radius:26px;padding:clamp(16px,3vw,28px);margin:26px 0}
+.lab>.lab-tag{display:inline-block;background:var(--grad);color:#fff;font-weight:600;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:3px 14px;margin-bottom:10px}
+.lab h3{margin-bottom:.2em}
+.lab .sub{color:var(--muted);font-size:.95rem;margin-bottom:14px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin-bottom:12px}
+.field{display:flex;flex-direction:column;gap:4px;font-size:.82rem;color:var(--muted);font-weight:500;min-width:140px}
+.field.grow{flex:1}
+input[type=text],input[type=number],select,textarea{font:inherit;font-size:.95rem;color:var(--ink);background:#faf8ff;border:1.5px solid #ddd5ff;border-radius:12px;padding:9px 12px;width:100%}
+textarea{font-family:ui-monospace,Consolas,monospace;font-size:.85rem;min-height:70px;resize:vertical}
+input[type=range]{width:100%;accent-color:#7b5cf0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:.92rem;font-weight:500;background:#f3efff;color:var(--ink);border:2px solid transparent;border-radius:999px;padding:8px 16px;cursor:pointer}
+.chip[aria-pressed=true],.chip.on{background:#fff;border-color:var(--violet);color:var(--violet)}
+.out{background:#15153a;color:#e8e6ff;border-radius:16px;padding:16px 18px;font-family:ui-monospace,Consolas,monospace;font-size:.84rem;overflow:auto;white-space:pre-wrap;word-break:break-word;margin:8px 0;position:relative}
+.out .k{color:#8fb7ff}.out .s{color:#9be6c4}.out .n{color:#ffc77a}.out .c{color:#8b89b5}
+.checks{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:6px}
+.checks li{font-size:.92rem;display:flex;gap:8px;align-items:flex-start}
+.checks .i{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:.78rem;font-weight:700;color:#fff}
+.checks .good .i{background:var(--ok)}.checks .badc .i{background:var(--bad)}.checks .info .i{background:var(--blue)}
+.copy{position:absolute;top:8px;right:8px;font:inherit;font-size:.75rem;background:#2d2d63;color:#fff;border:0;border-radius:8px;padding:4px 10px;cursor:pointer}
+
+/* recorrido */
+.track{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:6px 0 14px}
+.stage{font:inherit;font-weight:600;background:#f3efff;border:2px solid transparent;border-radius:16px;padding:10px 16px;cursor:pointer;font-size:.92rem}
+.stage.on{background:#fff;border-color:var(--violet);color:var(--violet)}
+.arrow{color:#b9aef5;font-weight:700}
+.stagebox{background:#faf8ff;border-radius:18px;padding:16px 20px;min-height:84px}
+.pipe{height:10px;background:#ece7ff;border-radius:99px;position:relative;margin:4px 0 14px;overflow:hidden}
+.pipe i{position:absolute;top:0;left:0;height:100%;width:40px;background:var(--grad);border-radius:99px;transition:left .6s ease}
+
+/* pasos */
+.progress{height:12px;background:#ece7ff;border-radius:99px;overflow:hidden;margin:6px 0 18px}
+.progress i{display:block;height:100%;width:0;background:var(--grad);transition:width .4s}
+.steps{display:grid;gap:14px;counter-reset:s;padding:0;list-style:none;margin:0}
+.step{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px 22px 18px 74px;position:relative;counter-increment:s}
+.step::before{content:counter(s);position:absolute;left:20px;top:16px;width:38px;height:38px;border-radius:50%;background:var(--grad);color:#fff;font-family:"League Spartan";font-weight:800;font-size:1.2rem;display:grid;place-items:center}
+.step.done{background:#f2fbf6;border-color:#b9e8cf}
+.step.done::before{content:"✓";background:var(--ok)}
+.step h3{margin-bottom:.2em}
+.step p,.step li{color:var(--muted);font-size:.95rem}
+.step ul{margin:.3em 0 .6em;padding-left:1.1em}
+.step .btn{margin-top:4px}
+.note{background:#fff6dc;border-left:5px solid var(--warn);border-radius:12px;padding:10px 14px;font-size:.9rem;margin:10px 0}
+.note.bad{background:#ffe9ea;border-color:var(--bad)}
+.note.good{background:#e8f8ef;border-color:var(--ok)}
+
+/* tablas */
+.tablewrap{overflow-x:auto;margin:10px 0}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid #eee9ff;vertical-align:top}
+th{font-size:.78rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);background:#faf8ff}
+
+/* simulador */
+.sim{display:grid;grid-template-columns:minmax(250px,.85fr) minmax(250px,.9fr) minmax(300px,1.35fr);gap:16px;align-items:start}
+.pane{background:#fff;border:1px solid var(--line);border-radius:22px;padding:16px;min-width:0}
+.pane h4{font-family:"League Spartan";font-size:1.15rem;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.pane h4 .st{font-family:Lexend;font-size:.7rem;font-weight:600;padding:2px 9px;border-radius:99px;background:#e8f8ef;color:var(--ok)}
+.pane h4 .st.off{background:#ffe9ea;color:var(--bad)}
+.ctl{margin-bottom:12px}
+.ctl label{display:flex;justify-content:space-between;font-size:.85rem;font-weight:500;color:var(--muted)}
+.ctl output{font-weight:700;color:var(--ink)}
+.switchrow{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0}
+.tg{display:flex;align-items:center;gap:8px;font-size:.88rem;cursor:pointer}
+.tg input{width:18px;height:18px;accent-color:#7b5cf0}
+.led{display:inline-block;width:14px;height:14px;border-radius:50%;background:#cfcde6;margin-right:6px;vertical-align:-2px;transition:.3s}
+.led.on{background:#2fd17f;box-shadow:0 0 12px #2fd17f}
+.log{background:#15153a;color:#dcd9ff;border-radius:14px;padding:10px;height:392px;overflow:auto;font-family:ui-monospace,Consolas,monospace;font-size:.76rem;line-height:1.45}
+.log div{padding:3px 0;border-bottom:1px solid rgba(255,255,255,.06);word-break:break-word}
+.log .out-l{color:#9cc4ff}.log .in-l{color:#a6efc9}.log .err-l{color:#ff9ba1}.log .inf-l{color:#c6bfff}.log .ev-l{color:#ffd48a}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tab{font:inherit;font-size:.86rem;font-weight:600;background:#f3efff;border:0;border-radius:12px;padding:7px 13px;cursor:pointer}
+.tab[aria-selected=true]{background:var(--grad);color:#fff}
+.tabpanel[hidden]{display:none}
+.wgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.widget{background:#faf8ff;border:1px solid #ece7ff;border-radius:16px;padding:10px 12px;min-width:0}
+.widget.wide{grid-column:1/-1}
+.widget small{display:block;color:var(--muted);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+.big{font-family:"League Spartan";font-weight:800;font-size:2.4rem;line-height:1}
+.big.hot{color:var(--bad)}
+.chart{width:100%;height:120px;display:block}
+.sw{position:relative;width:62px;height:32px;border-radius:99px;background:#cfcde6;border:0;cursor:pointer;transition:.25s}
+.sw::after{content:"";position:absolute;top:4px;left:4px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.25s}
+.sw[aria-checked=true]{background:var(--ok)}
+.sw[aria-checked=true]::after{left:34px}
+.inc{display:flex;gap:8px;align-items:center;font-size:.8rem;border-bottom:1px solid #eee9ff;padding:5px 0}
+.badge{font-size:.7rem;font-weight:700;border-radius:99px;padding:2px 9px;background:#ffe9ea;color:var(--bad)}
+.badge.ok{background:#e8f8ef;color:var(--ok)}
+.badge.y{background:#fff3c4;color:#8a6200}.badge.g{background:#dff7e6;color:#16723e}
+.diag{background:#fff6dc;border-left:5px solid var(--warn);border-radius:12px;padding:10px 14px;font-size:.88rem;margin-top:12px}
+.diag b{display:block;margin-bottom:2px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(30px);opacity:0;background:var(--ink);color:#fff;padding:12px 20px;border-radius:14px;font-size:.9rem;z-index:99;transition:.3s;max-width:90vw;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* quiz */
+.qbox{background:#faf8ff;border-radius:20px;padding:20px}
+.qopt{display:block;width:100%;text-align:left;font:inherit;background:#fff;border:2px solid #e3dcff;border-radius:14px;padding:11px 16px;margin:8px 0;cursor:pointer}
+.qopt:hover:not(:disabled){border-color:var(--violet)}
+.qopt.right{border-color:var(--ok);background:#e8f8ef}.qopt.wrong{border-color:var(--bad);background:#ffe9ea}
+.qexp{margin-top:10px;font-size:.92rem;color:var(--muted)}
+
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.sum div{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px}
+.sum b{display:block;font-family:"League Spartan";font-size:1.15rem;margin-bottom:2px}
+.sum span{font-size:.9rem;color:var(--muted)}
+ol.src{padding-left:1.2em}ol.src li{margin:6px 0;font-size:.92rem}
+footer.sheet{display:flex;gap:16px;align-items:center;font-size:.88rem;color:var(--muted)}
+footer img{width:54px;height:auto}
+
+@media (max-width:980px){.hero-grid{grid-template-columns:1fr}.sim{grid-template-columns:1fr}.topbar .brand span{display:none}}
+@media (max-width:560px){.team{grid-template-columns:1fr}.wgrid{grid-template-columns:1fr}.step{padding-left:20px;padding-top:62px}.btn{font-size:1.05rem;padding:12px 22px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes rise{0%{transform:translateY(0);opacity:0}20%{opacity:.8}100%{transform:translateY(-60px);opacity:0}}
+.bob{animation:bob 4s ease-in-out infinite}
+.bub{animation:rise 5s ease-in infinite}

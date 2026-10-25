@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ubidots: del sensor al dashboard</title>
+<meta name="description" content="Página interactiva sobre qué es Ubidots y cómo se configura: dispositivos, variables, tokens, HTTP y MQTT, dashboards y eventos, con un simulador para probar.">
+<meta name="theme-color" content="#d8caff">
+<link rel="icon" href="assets/logo-unifranz.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#que-es">Saltar al contenido</a>
+
+<div class="topbar">
+  <a class="brand" href="#inicio"><img src="assets/logo-unifranz.png" alt="Logo de la Universidad Privada Franz Tamayo"><span>Ubidots</span></a>
+  <nav aria-label="Secciones">
+    <a href="#que-es">Qué es</a><a href="#piezas">Piezas</a><a href="#configuracion">Configuración</a>
+    <a href="#conexion">Conexión</a><a href="#simulador">Simulador</a><a href="#quiz">Quiz</a>
+  </nav>
+</div>
+
+<header class="sheet hero" id="inicio">
+  <div class="hero-grid">
+    <div>
+      <span class="kicker">Foro · Internet de las Cosas</span>
+      <h1><span class="grad">Del sensor</span><br><span class="grad">al dashboard</span></h1>
+      <p class="lead">Ubidots es una plataforma en la nube que recibe los datos de tus dispositivos, los guarda, los dibuja en tableros y te avisa cuando algo se sale de lo normal. Aquí aprendes qué es, cómo se configura y lo pruebas con tus manos.</p>
+      <div class="cta">
+        <a class="btn primary" href="#que-es">Empezar</a>
+        <a class="btn ghost" href="#simulador"><span class="play">▶</span> Ir al simulador</a>
+      </div>
+    </div>
+    <svg class="hero-art bob" viewBox="0 0 480 380" role="img" aria-label="Una placa con sensor envía puntos de datos por una línea hasta un tablero con gráficas">
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a63ff"/><stop offset="1" stop-color="#b265d6"/></linearGradient>
+        <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#efe9ff"/></linearGradient>
+      </defs>
+      <circle cx="250" cy="190" r="170" fill="#e8defe" opacity=".55"/>
+      <circle cx="380" cy="80" r="46" fill="#cfe9ff" opacity=".8"/>
+      <g>
+        <rect x="24" y="196" width="150" height="104" rx="16" fill="#1c1b3a"/>
+        <rect x="40" y="212" width="52" height="40" rx="6" fill="url(#g1)"/>
+        <text x="66" y="238" font-family="League Spartan" font-weight="800" font-size="14" fill="#fff" text-anchor="middle">ESP32</text>
+        <circle cx="120" cy="222" r="6" fill="#2fd17f"/><circle cx="140" cy="222" r="6" fill="#ffc77a"/>
+        <g stroke="#9aa0ff" stroke-width="3"><path d="M46 300v14M66 300v14M86 300v14M106 300v14M126 300v14M146 300v14"/></g>
+        <path d="M100 262h54" stroke="#6a67b4" stroke-width="6" stroke-linecap="round"/>
+        <rect x="170" y="238" width="22" height="14" rx="3" fill="#6a67b4"/>
+      </g>
+      <path id="route" d="M192 245 C 250 245, 250 150, 306 150" fill="none" stroke="#a89cff" stroke-width="3" stroke-dasharray="3 9" stroke-linecap="round"/>
+      <g fill="#a63bd0">
+        <circle r="7"><animateMotion dur="3s" repeatCount="indefinite" begin="0s"><mpath href="#route"/></animateMotion></circle>
+        <circle r="7" fill="#2326e6"><animateMotion dur="3s" repeatCount="indefinite" begin="1s"><mpath href="#route"/></animateMotion></circle>
+        <circle r="7" fill="#27c3b0"><animateMotion dur="3s" repeatCount="indefinite" begin="2s"><mpath href="#route"/></animateMotion></circle>
+      </g>
+      <g>
+        <rect x="300" y="54" width="164" height="170" rx="18" fill="url(#g2)" stroke="#d9d2ff" stroke-width="2"/>
+        <circle cx="318" cy="74" r="4" fill="#ff7a45"/><circle cx="332" cy="74" r="4" fill="#ffc77a"/><circle cx="346" cy="74" r="4" fill="#2fd17f"/>
+        <rect x="316" y="90" width="64" height="52" rx="10" fill="#fff" stroke="#e5dfff"/>
+        <path d="M326 130a22 22 0 0 1 44 0" fill="none" stroke="#e5dfff" stroke-width="7" stroke-linecap="round"/>
+        <path d="M326 130a22 22 0 0 1 30-20" fill="none" stroke="url(#g1)" stroke-width="7" stroke-linecap="round"/>
+        <rect x="388" y="90" width="62" height="52" rx="10" fill="#fff" stroke="#e5dfff"/>
+        <text x="419" y="124" font-family="League Spartan" font-weight="800" font-size="24" fill="#1c1b3a" text-anchor="middle">24°</text>
+        <rect x="316" y="152" width="134" height="60" rx="10" fill="#fff" stroke="#e5dfff"/>
+        <polyline points="324,200 342,188 360,194 378,172 396,180 414,164 440,170" fill="none" stroke="#2326e6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <text x="99" y="336" font-family="Lexend" font-size="12" fill="#5b5a78" text-anchor="middle">dispositivo</text>
+      <text x="382" y="248" font-family="Lexend" font-size="12" fill="#5b5a78" text-anchor="middle">dashboard</text>
+    </svg>
+  </div>
+
+  <div class="team">
+    <img src="assets/logo-unifranz.png" alt="Logo de la Universidad Privada Franz Tamayo">
+    <div>
+      <div class="uni">UNIVERSIDAD PRIVADA FRANZ TAMAYO</div>
+      <div class="fac">FACULTAD DE INGENIERÍA · INGENIERÍA DE SISTEMAS</div>
+      <div class="foro"><b>Foro:</b> (ABRetos) Investigar que es y la configuración de UBIDOT</div>
+      <ul aria-label="Estudiantes">
+        <li>MARCOS ALEXANDER PANOZO PATTY</li><li>ARIO MAURICIO CHACON OROSCO</li><li>MARCOS JAVIER VARGAS CALLIZAYA</li><li>CRIS KLEBER BALLON CHIPANA</li><li>ADRIAN EDWIN AGUIRRE ROJAS</li>
+      </ul>
+      <div class="fac" style="margin-top:8px">LA PAZ - BOLIVIA · 2026</div>
+    </div>
+  </div>
+
+  <svg class="waves" viewBox="0 0 1200 220" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 80 C 180 20, 330 130, 560 90 S 960 10, 1200 70 V220 H0Z" fill="#2b6fb5" opacity=".45"/>
+    <path d="M0 120 C 200 60, 380 170, 620 120 S 1000 60, 1200 110 V220 H0Z" fill="#0f6f86"/>
+    <path d="M0 160 C 220 110, 420 200, 660 150 S 1040 120, 1200 150 V220 H0Z" fill="#0c2d57"/>
+    <g fill="none" stroke-linecap="round" stroke-width="9">
+      <path d="M90 220 C 80 190, 110 170, 96 140" stroke="#27c3b0"/><path d="M118 220 C 130 195, 108 175, 122 150" stroke="#ff7ab6"/>
+      <path d="M1040 220 C 1030 190, 1060 170, 1046 140" stroke="#ff7ab6"/><path d="M1070 220 C 1082 195, 1060 175, 1074 150" stroke="#27c3b0"/>
+      <path d="M560 220 C 552 200, 574 188, 566 168" stroke="#27c3b0"/>
+    </g>
+    <g fill="#9ee9ff">
+      <circle class="bub" cx="300" cy="170" r="5"/><circle class="bub" cx="420" cy="190" r="4" style="animation-delay:1.4s"/>
+      <circle class="bub" cx="760" cy="175" r="6" style="animation-delay:2.2s"/><circle class="bub" cx="880" cy="190" r="4" style="animation-delay:.6s"/>
+      <circle class="bub" cx="640" cy="200" r="5" style="animation-delay:3s"/>
+    </g>
+  </svg>
+</header>
+
+<!-- QUÉ ES -->
+<section class="sheet" id="que-es">
+  <span class="kicker">1 · La idea</span>
+  <h2>¿Qué es <span class="grad">Ubidots</span>?</h2>
+  <p class="lead">Ubidots es una plataforma de desarrollo de Internet de las Cosas (IoT). Sirve para que estudiantes, emprendedores, integradores y empresas lancen proyectos IoT sin tener que contratar un equipo de software: tú mandas los datos y Ubidots los guarda, los muestra y reacciona.</p>
+  <div class="cards">
+    <article class="card"><span class="tag">STEM</span><h3>Para aprender</h3><p>Nivel gratuito pensado para makers, estudiantes, investigadores y aficionados que están descubriendo el IoT. Es el que usarías en la universidad.</p></article>
+    <article class="card"><span class="tag">Cloud</span><h3>Para proyectos</h3><p>La oferta principal de Ubidots, entregada como servicio en la nube, para llevar un proyecto a producción.</p></article>
+    <article class="card"><span class="tag">Enterprise</span><h3>Para volumen</h3><p>Soporte dedicado, acuerdos de servicio y mucho volumen de dispositivos o datos. Puede incluir una nube privada.</p></article>
+  </div>
+
+  <div class="lab">
+    <span class="lab-tag">Prueba</span>
+    <h3>Sigue al dato de punta a punta</h3>
+    <p class="sub">Toca cada etapa y mira qué le pasa al dato.</p>
+    <div class="track" id="track" role="tablist" aria-label="Etapas"></div>
+    <div class="pipe" aria-hidden="true"><i id="pipeDot"></i></div>
+    <div class="stagebox" id="stageBox" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- PIEZAS -->
+<section class="sheet" id="piezas">
+  <span class="kicker">2 · Las piezas</span>
+  <h2>Dispositivos, variables y <span class="grad">dots</span></h2>
+  <p class="lead">Todo en Ubidots gira alrededor de tres cosas: el dispositivo que envía, la variable que guarda y el dot, que es cada dato con su hora.</p>
+  <div class="cards">
+    <article class="card"><span class="tag">Device</span><h3>Dispositivo</h3><p>Una entidad virtual con un <b>label</b> único (el que usas en el código) y un <b>nombre</b> para humanos. Lo recomendable es un dispositivo de Ubidots por cada dispositivo físico.</p></article>
+    <article class="card"><span class="tag">Variable</span><h3>Variable</h3><p>Guarda los dots de un dispositivo, como temperatura o humedad. Las <span class="dotcolor" style="background:#f0c419"></span><b>default</b> traen datos crudos y las <span class="dotcolor" style="background:#3cc47c"></span><b>sintéticas</b> se calculan con fórmulas.</p></article>
+    <article class="card"><span class="tag">Dot</span><h3>Dot</h3><p>Cada dato que llega. Tiene <code>value</code> (número), <code>timestamp</code> (milisegundos, opcional) y <code>context</code> (pares clave-valor, hasta 1 KB).</p></article>
+    <article class="card"><span class="tag">Token</span><h3>Token</h3><p>La llave que acompaña cada petición. Dice quién eres y a qué cuenta pertenece el dato. Se trata como una contraseña.</p></article>
+    <article class="card"><span class="tag">Dashboard</span><h3>Dashboard y widgets</h3><p>Tableros arrastrar y soltar con métricas, gráficas de líneas, tablas, mapas, interruptores de control e incidentes.</p></article>
+    <article class="card"><span class="tag">Event</span><h3>Evento</h3><p>Una regla que, al cumplirse, avisa por correo, SMS, Slack, Telegram o voz, o ejecuta un webhook, una función o cambia una variable.</p></article>
+  </div>
+
+  <div class="lab">
+    <span class="lab-tag">Prueba</span>
+    <h3>Arma un dot y mira si Ubidots lo aceptaría</h3>
+    <p class="sub">Cambia el valor, el timestamp y el contexto. El JSON se actualiza y las reglas se revisan solas.</p>
+    <div class="row">
+      <label class="field"><span>value</span><input type="text" id="dotValue" value="24.5" inputmode="decimal"></label>
+      <label class="field"><span>timestamp</span>
+        <select id="dotTs"><option value="none">Sin timestamp (lo pone Ubidots)</option><option value="ms">Ahora en milisegundos</option><option value="s">Ahora en segundos</option></select></label>
+      <label class="field"><span>context</span>
+        <select id="dotCtxPreset"><option value="none">Sin contexto</option><option value="text">Texto (estado)</option><option value="gps">GPS (lat y lng)</option><option value="custom">Escribir mi propio JSON</option></select></label>
+    </div>
+    <textarea id="dotCtx" aria-label="JSON del contexto" hidden></textarea>
+    <pre class="out" id="dotJson" aria-live="polite"></pre>
+    <ul class="checks" id="dotChecks"></ul>
+  </div>
+</section>
+
+<!-- CONFIGURACIÓN -->
+<section class="sheet" id="configuracion">
+  <span class="kicker">3 · Configuración</span>
+  <h2>Seis pasos para <span class="grad">ponerlo a funcionar</span></h2>
+  <p class="lead">Marca cada paso cuando lo hayas entendido. La barra muestra cuánto llevas.</p>
+  <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="progressBar"><i id="progressFill"></i></div>
+  <ol class="steps" id="steps"></ol>
+</section>
+
+<!-- CONEXIÓN -->
+<section class="sheet" id="conexion">
+  <span class="kicker">4 · Conexión</span>
+  <h2>Cómo habla tu dispositivo con <span class="grad">Ubidots</span></h2>
+  <p class="lead">Ubidots acepta datos por HTTP (REST) y por MQTT. Rellena los datos de tu dispositivo y el código se arma solo. El token de esta página es de mentira: nunca publiques el tuyo.</p>
+
+  <div class="lab">
+    <span class="lab-tag">Prueba</span>
+    <h3>Generador de código</h3>
+    <div class="row">
+      <label class="field"><span>Dispositivo (device label)</span><input type="text" id="gDev" value="esp32-aula"></label>
+      <label class="field"><span>Variable (variable label)</span><input type="text" id="gVar" value="temperatura"></label>
+      <label class="field"><span>Valor</span><input type="number" id="gVal" value="24.5" step="0.1"></label>
+      <label class="field grow"><span>Token (ejemplo)</span><input type="text" id="gTok" value="BBUS-TU_TOKEN_AQUI"></label>
+    </div>
+    <div class="chips" id="gProto" role="group" aria-label="Protocolo">
+      <button class="chip" type="button" data-p="http" aria-pressed="true">HTTP (curl)</button>
+      <button class="chip" type="button" data-p="mqtt" aria-pressed="false">MQTT (mosquitto)</button>
+      <button class="chip" type="button" data-p="esp32" aria-pressed="false">ESP32 (Arduino)</button>
+    </div>
+    <pre class="out" id="gCode"></pre>
+    <ul class="checks" id="gChecks"></ul>
+  </div>
+
+  <div class="cards">
+    <article class="card"><span class="tag">HTTP</span><h3>REST</h3><p>Se envía un <code>POST</code> a <code>industrial.api.ubidots.com/api/v1.6/devices/&lt;label&gt;/</code> con la cabecera <code>X-Auth-Token</code> y un JSON. Va bien cuando envías cada tanto.</p></article>
+    <article class="card"><span class="tag">MQTT</span><h3>Broker de Ubidots</h3><p>Servidor <code>industrial.api.ubidots.com</code>, puerto <code>1883</code>. <b>Usuario:</b> tu token. <b>Contraseña:</b> vacía. Sirve también para recibir órdenes.</p></article>
+  </div>
+
+  <h3>Qué soporta y qué no el broker compartido</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Tema</th><th>Qué pasa</th></tr></thead>
+    <tbody>
+      <tr><td>Publicar una variable</td><td><code>/v1.6/devices/{device}/{variable}</code> con <code>{"value":10}</code></td></tr>
+      <tr><td>Publicar varias</td><td><code>/v1.6/devices/{device}</code> con <code>{"temperatura":10,"humedad":50}</code></td></tr>
+      <tr><td>Leer el último valor</td><td>Suscribirse a <code>/v1.6/devices/{device}/{variable}/lv</code> entrega solo un número, fácil para un microcontrolador</td></tr>
+      <tr><td>Mayúsculas</td><td>El tema de suscripción debe ir todo en minúsculas</td></tr>
+      <tr><td>QoS</td><td>Se admiten 0 y 1. QoS 2 necesita un broker dedicado</td></tr>
+      <tr><td>Testamento y sesión persistente</td><td>No están disponibles en el broker compartido</td></tr>
+      <tr><td>Clientes sin actividad</td><td>Se cierran tras 90 minutos si no reciben paquetes</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- SIMULADOR -->
+<section class="sheet" id="simulador">
+  <span class="kicker">5 · Simulador</span>
+  <h2>Tu propio <span class="grad">mini Ubidots</span></h2>
+  <p class="lead">Aquí manejas el sistema completo: un dispositivo, la red y la nube. Es una simulación hecha en el navegador y no se conecta a Ubidots real.</p>
+  <p style="font-size:.95rem;color:var(--muted)"><b>Cómo se usa:</b> 1) pulsa <b>Enviar ahora</b> y mira cómo nace el dispositivo en Ubidots. 2) Pasa a la pestaña <b>Dashboard</b>. 3) Crea un evento y pulsa <b>Ola de calor</b>. 4) Prueba los casos que fallan.</p>
+
+  <div class="sim">
+    <!-- dispositivo -->
+    <div class="pane" id="paneDev">
+      <h4>Dispositivo virtual <span class="st" id="devState">listo</span></h4>
+      <label class="field" style="margin-bottom:10px"><span>Device label</span><input type="text" id="sDev" value="esp32-aula"></label>
+      <div class="ctl"><label for="sTemp">Temperatura real <output id="oTemp">24.0 °C</output></label><input type="range" id="sTemp" min="0" max="50" step="0.5" value="24"></div>
+      <div class="ctl"><label for="sHum">Humedad real <output id="oHum">60 %</output></label><input type="range" id="sHum" min="0" max="100" step="1" value="60"></div>
+      <div class="row">
+        <label class="field"><span>Protocolo</span><select id="sProto"><option value="http">HTTP</option><option value="mqtt">MQTT</option></select></label>
+        <label class="field"><span>Token</span><select id="sTok"><option value="ok">Correcto</option><option value="bad">Incorrecto</option><option value="empty">Vacío</option></select></label>
+      </div>
+      <div class="switchrow">
+        <label class="tg"><input type="checkbox" id="sWifi" checked> Wi-Fi conectado</label>
+        <label class="tg"><input type="checkbox" id="sAuto"> Enviar cada 2 s</label>
+      </div>
+      <div class="row" style="margin-bottom:6px">
+        <button class="btn primary small" type="button" id="bSend">Enviar ahora</button>
+        <button class="btn line small" type="button" id="bHeat">Ola de calor</button>
+      </div>
+      <p style="margin:8px 0 0;font-size:.9rem"><span class="led" id="fanLed"></span><b>Ventilador del dispositivo:</b> <span id="fanTxt">apagado</span></p>
+    </div>
+
+    <!-- red -->
+    <div class="pane">
+      <h4>Red y registro</h4>
+      <div class="log" id="log" role="log" aria-live="off"></div>
+      <div class="row" style="margin-top:10px;margin-bottom:0">
+        <button class="btn line small" type="button" id="bClear">Limpiar registro</button>
+        <button class="btn line small" type="button" id="bReset">Reiniciar todo</button>
+      </div>
+    </div>
+
+    <!-- nube -->
+    <div class="pane">
+      <h4>Ubidots (nube) <span class="st off" id="cloudState">sin datos</span></h4>
+      <div class="tabs" role="tablist" aria-label="Vistas de Ubidots">
+        <button class="tab" role="tab" aria-selected="true" data-t="tDevices" type="button">Devices</button>
+        <button class="tab" role="tab" aria-selected="false" data-t="tDash" type="button">Dashboard</button>
+        <button class="tab" role="tab" aria-selected="false" data-t="tSynth" type="button">Variable sintética</button>
+        <button class="tab" role="tab" aria-selected="false" data-t="tEvents" type="button">Eventos</button>
+      </div>
+
+      <div class="tabpanel" id="tDevices">
+        <div class="tablewrap"><table>
+          <thead><tr><th>Dispositivo</th><th>Variables</th><th>Último dato</th></tr></thead>
+          <tbody id="devBody"><tr><td colspan="3" style="color:var(--muted)">Todavía no hay dispositivos. Envía un dato: Ubidots lo creará solo.</td></tr></tbody>
+        </table></div>
+      </div>
+
+      <div class="tabpanel" id="tDash" hidden>
+        <div class="wgrid">
+          <div class="widget"><small>Temperatura</small><div class="big" id="wTemp">—</div></div>
+          <div class="widget"><small>Humedad</small><div class="big" id="wHum">—</div></div>
+          <div class="widget wide"><small>Temperatura, últimos dots</small><svg class="chart" id="wChart" viewBox="0 0 300 120" preserveAspectRatio="none" role="img" aria-label="Gráfica de temperatura"></svg></div>
+          <div class="widget"><small>Control: ventilador</small>
+            <div style="display:flex;align-items:center;gap:10px;margin-top:6px"><button class="sw" id="swFan" role="switch" aria-checked="false" aria-label="Ventilador"></button><b id="swTxt">0</b></div></div>
+          <div class="widget"><small>Variable sintética</small><div class="big" id="wSynth" style="font-size:1.8rem">—</div><small id="wSynthName" style="margin-top:4px"></small></div>
+          <div class="widget wide"><small>Incidentes</small><div id="wInc"><span style="color:var(--muted);font-size:.85rem">Sin incidentes. Crea un evento en la pestaña Eventos.</span></div></div>
+        </div>
+      </div>
+
+      <div class="tabpanel" id="tSynth" hidden>
+        <p style="font-size:.9rem;color:var(--muted)">Una variable sintética se calcula a partir de otras. Usa <code>temperatura</code>, <code>humedad</code>, <code>ventilador</code>, números, <code>+ - * /</code>, paréntesis y funciones <code>mean()</code>, <code>max()</code>, <code>min()</code>, <code>ceil()</code>.</p>
+        <div class="row">
+          <label class="field"><span>Nombre</span><input type="text" id="syName" value="temperatura_f"></label>
+          <label class="field grow"><span>Fórmula</span><input type="text" id="syExpr" value="(temperatura * 9 / 5) + 32"></label>
+        </div>
+        <div class="chips" id="syPresets"></div>
+        <div class="out" id="syOut" style="margin-top:12px">—</div>
+      </div>
+
+      <div class="tabpanel" id="tEvents" hidden>
+        <p style="font-size:.9rem;color:var(--muted)">Un evento vigila una variable y, al cumplirse, ejecuta una acción. Cuando el valor vuelve a la normalidad, el incidente se cierra.</p>
+        <div class="row">
+          <label class="field"><span>Si</span><select id="evVar"><option>temperatura</option><option>humedad</option></select></label>
+          <label class="field" style="min-width:90px"><span>es</span><select id="evOp"><option value=">">mayor que</option><option value="<">menor que</option></select></label>
+          <label class="field" style="min-width:90px"><span>valor</span><input type="number" id="evTh" value="30"></label>
+        </div>
+        <div class="row">
+          <label class="field grow"><span>Entonces</span><select id="evAct">
+            <option value="email">Enviar correo</option><option value="telegram">Mensaje de Telegram</option><option value="sms">Enviar SMS</option>
+            <option value="webhook">Llamar un webhook</option><option value="setvar">Cambiar variable: ventilador = 1</option></select></label>
+          <button class="btn primary small" type="button" id="evSave">Activar evento</button>
+        </div>
+        <div id="evState" style="font-size:.9rem;color:var(--muted)">Ningún evento activo.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lab" style="margin-top:22px">
+    <span class="lab-tag">Prueba</span>
+    <h3>Casos que fallan</h3>
+    <p class="sub">Elige un error típico, pulsa Provocar y revisa el registro. Abajo aparece qué lo causa y cómo se arregla.</p>
+    <div class="row">
+      <label class="field grow"><span>Caso</span><select id="caseSel">
+        <option value="token">Token incorrecto</option>
+        <option value="wifi">Se cae el Wi-Fi</option>
+        <option value="text">Mandar texto en value</option>
+        <option value="seconds">Timestamp en segundos</option>
+        <option value="upper">Suscripción MQTT con mayúsculas</option>
+        <option value="qos2">Pedir QoS 2 al broker compartido</option>
+        <option value="label">Cambiar el label del dispositivo</option>
+      </select></label>
+      <button class="btn primary small" type="button" id="bCase">Provocar</button>
+    </div>
+    <div class="diag" id="diag" hidden></div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="sheet" id="quiz">
+  <span class="kicker">6 · Ponte a prueba</span>
+  <h2>Seis preguntas <span class="grad">rápidas</span></h2>
+  <div class="qbox" id="qbox" aria-live="polite"></div>
+</section>
+
+<!-- RESUMEN -->
+<section class="sheet" id="resumen">
+  <span class="kicker">En resumen</span>
+  <h2>Lo que te llevas</h2>
+  <div class="sum">
+    <div><b>Es una plataforma IoT en la nube</b><span>Recibe, guarda, muestra y avisa. Tiene nivel STEM gratis para aprender.</span></div>
+    <div><b>Device, variable, dot</b><span>El dispositivo se crea solo al primer envío. Cada dato es un dot con value, timestamp y context.</span></div>
+    <div><b>El token abre la puerta</b><span>Se saca de API Credentials y va en la cabecera HTTP o como usuario MQTT.</span></div>
+    <div><b>HTTP o MQTT</b><span>HTTP para envíos sueltos. MQTT para enviar y recibir órdenes con el broker de Ubidots.</span></div>
+    <div><b>Dashboards y eventos</b><span>Widgets para ver y controlar. Eventos para que Ubidots reaccione sin que lo mires.</span></div>
+    <div><b>Sintéticas para calcular</b><span>Fórmulas sobre variables ya guardadas, como pasar °C a °F o sacar un promedio.</span></div>
+  </div>
+  <h3 style="margin-top:28px">Fuentes consultadas</h3>
+  <ol class="src">
+    <li><a href="https://dev.ubidots.com/" target="_blank" rel="noopener">Ubidots, guías para desarrolladores: qué es Ubidots, dispositivos, variables y dots</a></li>
+    <li><a href="https://help.ubidots.com/en/articles/9350714-ubidots-mqtt-broker" target="_blank" rel="noopener">Ubidots Help Center, broker MQTT (host, credenciales, temas, límites)</a></li>
+    <li><a href="https://help.ubidots.com/en/articles/636677-what-are-variables" target="_blank" rel="noopener">Ubidots Help Center, qué son las variables</a></li>
+    <li><a href="https://help.ubidots.com/user-guides/ubidots-basics-devices-variables-dashboards-and-alerts" target="_blank" rel="noopener">Ubidots Basics: dispositivos, variables, dashboards y alertas</a></li>
+    <li><a href="https://help.ubidots.com/en/collections/356483-user-guides" target="_blank" rel="noopener">Ubidots Help Center, guías de usuario (eventos, widgets, notificaciones)</a></li>
+    <li><a href="https://help.ubidots.com/en/articles/6752604-create-an-incidents-widget" target="_blank" rel="noopener">Ubidots Help Center, widget de incidentes</a></li>
+    <li><a href="https://github.com/ubidots/ubidots-esp32" target="_blank" rel="noopener">Librería oficial de Ubidots para ESP32 (GitHub)</a></li>
+    <li><a href="https://wiki.seeedstudio.com/Getting_started_with_Ubidots/" target="_blank" rel="noopener">Seeed Studio, primeros pasos con Ubidots y MQTT</a></li>
+  </ol>
+</section>
+
+<footer class="sheet">
+  <img src="assets/logo-unifranz.png" alt="Logo de la Universidad Privada Franz Tamayo">
+  <div>Foro: (ABRetos) Investigar que es y la configuración de UBIDOT · Universidad Privada Franz Tamayo · Ingeniería de Sistemas · La Paz - Bolivia · 2026</div>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+<script src="app.js"></script>
+</body>
+</html>
