@@ -371,6 +371,7 @@ el('bReset').onclick = () => {
   setAuto(false); el('sAuto').checked = false; el('sWifi').checked = true; el('sTok').value = 'ok'; el('sDev').value = 'esp32-aula'; el('sTemp').value = 24; el('sHum').value = 60;
   el('oTemp').textContent = '24.0 °C'; el('oHum').textContent = '60 %'; el('devState').textContent = 'listo'; el('devState').classList.remove('off');
   S.devs = {}; S.fanCloud = S.fanDev = 0; S.event = null; S.incidents = []; S.badSub = false;
+  el('syName').value = 'temperatura_f'; el('syExpr').value = '(temperatura * 9 / 5) + 32'; applySynth();
   el('log').innerHTML = ''; el('diag').hidden = true; el('evState').textContent = 'Ningún evento activo.'; paint(); toast('Simulador reiniciado');
 };
 $$('.tab').forEach(b => b.onclick = () => {
